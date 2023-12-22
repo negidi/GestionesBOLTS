@@ -1,0 +1,7 @@
+administrador
+usuario:admin
+contraseña:1234
+
+operador
+usuario:operador1
+contraseña: operador

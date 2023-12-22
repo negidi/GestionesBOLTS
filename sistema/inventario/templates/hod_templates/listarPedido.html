@@ -1,0 +1,114 @@
+{% extends 'hod_templates/base_template.html'%} {% block page_title %}
+<h5>Listado De Productos</h5>
+
+{% endblock page_title %} {% block main_content %}
+<section class="content">
+    {% if messages %}
+    <div class="form-group">
+        <div class="col-12">
+            {% for message in messages %} {% if message.tags == "error" %}
+            <div class="col-sm-12">
+                <div class="alert fade alert-simple alert-danger alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show mt-1 " role="alert" data-brk-library="component__alert">
+                    <button type="button" class="close font__size-18" data-dismiss="alert">
+                        <span aria-hidden="true">
+                            <i class="fa fa-times danger "></i>
+                        </span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <i class="start-icon far fa-times-circle faa-pulse animated"></i>
+                    <strong class="font__weight-semibold">Oh snap!</strong> {{message}}
+                </div>
+            </div>
+            {% elif message.tags == "success" %}
+            <div class="alert fade alert-simple alert-success alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show mt-1">
+                <button type="button" class="close font__size-18" data-dismiss="alert">
+                                              <span aria-hidden="true">
+                              <i class="fa fa-times greencross"></i>
+                              </a></span>
+                                              <span class="sr-only">Close</span> 
+                                          </button>
+                <i class="start-icon far fa-check-circle faa-tada animated"></i>
+                <strong class="font__weight-semibold">¡Bien hecho!</strong> {{message}}
+            </div>
+            {% endif %} {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="card manage sc">
+                <div class="card-header">
+                    <span>Listado De Productos</span>
+                    <div class="card-tools d-flex">
+                        <!--                
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                       
+                        <div class="input-group-append">
+                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div> -->
+                        <!-- <input type="search" name="search" id="filter" class="form-control float-right" placeholder="Search"> -->
+
+
+                        <a class="btn btn-sm btn-info mr-2" href="{% url 'agregar_Pedido'  %}"role="button">+ Agregar Nuevo Producto</a>
+
+                    </div>
+
+                </div>
+                                                <table class="table table-bordered table-hover dataTable" id="plist">
+                                                    <thead>
+                                                        
+                                                        <tr>
+                                                            <th>Item</th>
+                                                            <th>Producto</th>
+                                                            <th>Proveedor</th>
+                                                            <th>Cantidad</th>
+                                                            <th>Precio Compra</th>
+                                                            <th>Precio Total</th>
+                                                            <th>Recibido</th>
+                                                            <th>Opcion</th>
+                                                           
+                                                           
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    	{% for pedido in pedidos %}
+                                                        <tr>
+                                                            <td>{{ pedido.id }}</td>
+                                                            <td>{{ pedido.producto.descripcion }}</td>
+                                                            <td>{{ pedido.proveedor.nombre }}</td>
+                                                            <td>{{ pedido.cantidad }}</td>
+                                                            <td>{{pedido.producto.preciocompra}}</td> {# Subtotal: precio del producto multiplicado por la cantidad #}
+                                                            <td>{{ pedido.precio_total }}</td> {# Precio Total ya calculado en el modelo #}
+                                    
+                                                            <td>
+                                                                {% if not pedido.recibido %}
+                                                                    <form method="post" action="{% url 'recibir_pedido' pedido.id %}">
+                                                                        {% csrf_token %}
+                                                                        <button type="submit" class="btn btn-sm btn-primary">Recibido</button>
+                                                                    </form>
+                                                                {% else %}
+                                                                    <button class="btn btn-sm btn-success" disabled>Recibido</button>
+                                                                {% endif %}
+                                                            </td>
+                                                       
+                                                            <td>
+                                                                <a href="" class="btn btn-sm btn-warning">View</a>
+                                                                
+
+                                                            </td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </section>
+                </article>
+{% endblock %}

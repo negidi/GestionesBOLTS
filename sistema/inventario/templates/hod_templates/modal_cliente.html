@@ -1,0 +1,8 @@
+<div class="modal-content">
+    <form role="form" id="frmClienteModal" action="{% url 'a_Cliente' %}" method="post" class="form-inline">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-danger"><span class="fa fa-save"></span> Guardar</button>
+    </form>
+</div>
+</section>

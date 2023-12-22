@@ -1,0 +1,32 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block page_title %}
+    <h5>Confirmar Pedido</h5>
+{% endblock page_title %}
+{% block main_content %}
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card manage sc">
+                    <div class="card-header">
+                        <span>Confirmar Pedido</span>
+                    </div>
+                    <div class="card-body">
+                        <p>Producto: {{ pedido.producto.descripcion }}</p>
+                        <p>Proveedor: {{ pedido.proveedor.nombre }}</p>
+                        <p>Cantidad: {{ pedido.cantidad }}</p>
+                        <p>Precio Total: {{ pedido.precio_total }}</p>
+                        {% if not pedido.recibido %}
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="pedido_id" value="{{ pedido.id }}">
+                                <button type="submit" class="btn btn-sm btn-primary">Confirmar Pedido</button>
+                            </form>
+                        {% else %}
+                            <button class="btn btn-sm btn-success" disabled>Recibido</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
